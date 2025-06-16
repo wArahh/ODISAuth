@@ -23,7 +23,7 @@ Automates ODIS login using `pywinauto`, supporting **username/password and 2FA (
        "TOTP_SECURE": "your_totp_key"
    }
    ```
-3. **Run** the `ODISAuth.exe` file as administrator.
+3. **Run** the `ODISAuth.exe` file as administrator, when you see the online login window.
 
 ---
 
