@@ -115,6 +115,7 @@ class ODISAuth:
         try:
             otp_field = window.child_window(auto_id='otp', control_type='Edit')
             check_otp_button = window.child_window(title=CHECK_TOTP_BUTTON_TITLE, control_type='Button')
+            time.sleep(2)
 
             totp = pyotp.TOTP(self.totp_secure)
             remaining_time = totp.interval - (int(time.time()) % totp.interval)
