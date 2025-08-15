@@ -23,7 +23,7 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S'
 )
 
-Timings.window_find_timeout = 30
+Timings.window_find_timeout = 5
 Timings.after_click_wait = 1
 
 PARAM_CONFIG_FILENAME = 'ODISAuth_config.json'
@@ -112,21 +112,23 @@ class ODISAuth:
             logging.error('TOTP button is not found')
             return False
 
-        try:
-            otp_field = window.child_window(auto_id='otp', control_type='Edit')
-            check_otp_button = window.child_window(title=CHECK_TOTP_BUTTON_TITLE, control_type='Button')
-            time.sleep(2)
+        try_count = 0
+        while try_count < 2:
+            try:
+                time.sleep(3)
+                otp_field = window.child_window(auto_id='otp', control_type='Edit')
+                check_otp_button = window.child_window(title=CHECK_TOTP_BUTTON_TITLE, control_type='Button')
 
-            totp = pyotp.TOTP(self.totp_secure)
-            remaining_time = totp.interval - (int(time.time()) % totp.interval)
-            if remaining_time < 5:
-                time.sleep(remaining_time + 1)
+                time.sleep(5)
+                totp = pyotp.TOTP(self.totp_secure)
+                otp_field.set_text(totp.now())
+                check_otp_button.click()
+                try_count += 1
+            except Exception:
+                return True
 
-            otp_field.set_text(totp.now())
-            check_otp_button.click()
-        except Exception:
-            logging.error('OTP parameters are not found on the screen')
-            return False
+        logging.error('attempts to input TOTP exhausted')
+        return False
 
 
 if __name__ == '__main__':
