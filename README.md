@@ -31,3 +31,9 @@ Automates ODIS login using `pywinauto`, supporting **username/password and 2FA (
 1. **Log** in to your personal account at grp.volkswagenag.com
 2. **Locate** your TOTP key (in base32 format)
 3. **Copy** it into the TOTP_SECURE field in the config file
+
+
+## 🛠️ Build command
+```
+python -m PyInstaller --clean --onefile --noconsole --uac-admin --icon=odisauth.ico ODISAuth.py
+```

@@ -28,7 +28,7 @@ Timings.after_click_wait = 1
 
 PARAM_CONFIG_FILENAME = 'ODISAuth_config.json'
 PROVIDE_CREDENTIALS_BUTTON_TITLE = 'ВХОД ПО ЛОГИНУ / ПАРОЛЮ'
-USE_TOTP_BUTTON_TITLE = 'ВХОД С TOTP'
+USE_TOTP_BUTTON_TITLE_RE = '.*TOTP$'
 CHECK_TOTP_BUTTON_TITLE = 'ПРОВЕРИТЬ'
 
 MUTEX_NAME = "Global\\ODISAuthMutex"
@@ -105,7 +105,7 @@ class ODISAuth:
             return False
 
         try:
-            totp_button = window.child_window(title=USE_TOTP_BUTTON_TITLE, control_type='Button')
+            totp_button = window.child_window(title_re=USE_TOTP_BUTTON_TITLE_RE, control_type='Button')
 
             totp_button.click()
         except Exception:
